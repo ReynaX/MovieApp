@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movies_fr_cl_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#212121"
+        tools:context=".fragments.HomeFragment">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/movies_fr_vp_releases"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_tv_releases" />
+
+<!--        <Button-->
+<!--            android:id="@+id/movies_fr_btn_see_fav"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:onClick="onSeeAllButtonClicked"-->
+<!--            android:text="SEE ALL"-->
+<!--            android:textColor="#4169E1"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/movies_fr_tv_favorites_desc"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.917"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/movies_fr_tv_favorites"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/movies_fr_vp_releases" />-->
+
+        <TextView
+            android:id="@+id/movies_fr_tv_releases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incoming releases"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fan favorites"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_vp_releases" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_favorites_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This week's top TV and movies"
+            android:textColor="#909090"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_tv_favorites" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_favorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_favorites_desc" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_explore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TV shows airing today"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_explore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_explore">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_actors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_actors" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_actors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popular actors"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_explore" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
