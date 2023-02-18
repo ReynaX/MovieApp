@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.slider.Slider;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.reynax.moviereviewerapp.adapters.HorizontalMovieBoxAdapter;
+import com.reynax.moviereviewerapp.adapters.SliderAdapter;
 import com.reynax.moviereviewerapp.data.Movie;
 import com.reynax.moviereviewerapp.data.MoviesOutput;
 
@@ -50,12 +53,18 @@ public class JSONTask extends AsyncTask<String, Void, List<Movie>> {
         Fragment fragment = fragmentReference.get();
         View view = viewReference.get();
         if (fragment != null && view != null && movies != null) {
-            LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
-            manager.setOrientation(RecyclerView.HORIZONTAL);
-            RecyclerView list = (RecyclerView) viewReference.get();
-            list.setLayoutManager(manager);
-            list.setAdapter(new HorizontalMovieBoxAdapter(fragment, movies));
-            list.setNestedScrollingEnabled(false);
+
+            if(view instanceof RecyclerView) {
+                LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
+                manager.setOrientation(RecyclerView.HORIZONTAL);
+                RecyclerView list = (RecyclerView) view;
+                list.setLayoutManager(manager);
+                list.setAdapter(new HorizontalMovieBoxAdapter(fragment, movies));
+                list.setNestedScrollingEnabled(false);
+            }else if(view instanceof ViewPager2){
+                ViewPager2 slider = (ViewPager2) view;
+                slider.setAdapter(new SliderAdapter(fragment, movies));
+            }
         }
     }
 

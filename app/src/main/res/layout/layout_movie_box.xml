@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/h_movie_box_tv_title"
         app:layout_constraintStart_toEndOf="@+id/h_movie_box_iv_star"
         app:layout_constraintTop_toBottomOf="@+id/h_movie_box_iv_poster" />
