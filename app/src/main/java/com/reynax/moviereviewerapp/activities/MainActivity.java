@@ -1,9 +1,15 @@
 package com.reynax.moviereviewerapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.AsyncTaskLoader;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.wifi.hotspot2.pps.Credential;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.google.android.material.tabs.TabLayout;
 import com.reynax.moviereviewerapp.JSONTask;
@@ -12,9 +18,9 @@ import com.reynax.moviereviewerapp.adapters.CategoryBoxAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    TabLayout categoryTabLayout;
-    ViewPager2 categoryPager;
-    CategoryBoxAdapter categoryBoxAdapter;
+    private TabLayout categoryTabLayout;
+    private ViewPager2 categoryPager;
+    private CategoryBoxAdapter categoryBoxAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 categoryTabLayout.selectTab(categoryTabLayout.getTabAt(position));
             }
         });
-
-        JSONTask task = new JSONTask();
-        task.execute();
+        categoryPager.setUserInputEnabled(false);
     }
 
     private void createTabItems(){
@@ -61,4 +65,5 @@ public class MainActivity extends AppCompatActivity {
             mediaCategory.addTab(mediaCategory.newTab().setText("Celebrities"));
         }
     }
+
 }

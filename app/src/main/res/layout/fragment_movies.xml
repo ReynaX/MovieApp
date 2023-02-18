@@ -77,42 +77,42 @@
             app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_favorites_desc" />
 
         <TextView
-            android:id="@+id/movies_fr_tv_explore"
+            android:id="@+id/movies_fr_tv_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TV shows airing today"
+            android:text="In theaters now"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_fr_rv_explore"
+            android:id="@+id/movies_fr_rv_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_explore">
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_new">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_fr_rv_actors"
+            android:id="@+id/movies_fr_rv_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_actors" />
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_top" />
 
         <TextView
-            android:id="@+id/movies_fr_tv_actors"
+            android:id="@+id/movies_fr_tv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Popular actors"
+            android:text="Top rated movies all time"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_explore" />
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
