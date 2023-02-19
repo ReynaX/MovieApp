@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.reynax.moviereviewerapp.fragments.MoviesFragment;
+import com.reynax.moviereviewerapp.fragments.SeriesFragment;
 
 public class CategoryBoxAdapter extends FragmentStateAdapter {
 
@@ -26,6 +27,12 @@ public class CategoryBoxAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        switch(position){
+            case 0:
+                return new MoviesFragment();
+            case 1:
+                return new SeriesFragment();
+        }
         return new MoviesFragment();
     }
 

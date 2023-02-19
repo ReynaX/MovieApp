@@ -2,55 +2,59 @@ package com.reynax.moviereviewerapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie implements Content {
     @SerializedName("poster_path")
-    private String posterPath;
+    private final String posterPath;
 
     @SerializedName("adult")
-    private boolean adult;
+    private final boolean adult;
 
     @SerializedName("overview")
-    private String overview;
+    private final String overview;
 
     @SerializedName("release_date")
-    private String releaseData;
+    private final String releaseData;
 
     @SerializedName("genre_ids")
-    private Integer[] genres;
+    private final int[] genresIds;
 
     @SerializedName("id")
-    private int id;
+    private final int id;
 
+    @SerializedName("original_language")
+    private final String originalLanguage;
     @SerializedName("original_title")
-    private String originalTitle;
+    private final String originalTitle;
 
     @SerializedName("title")
-    private String title;
+    private final String title;
 
     @SerializedName("backdrop_path")
-    private String backdropPath;
+    private final String backdropPath;
 
     @SerializedName("popularity")
-    private Double popularity;
+    private final Double popularity;
 
     @SerializedName("vote_count")
-    private int voteCount;
+    private final int voteCount;
 
     @SerializedName("video")
-    private boolean video;
+    private final boolean video;
 
     @SerializedName("vote_average")
-    private String rating;
+    private final String rating;
 
-    public Movie(String posterPath, boolean adult, String overview, String releaseData, Integer[] genres,
-                 int id, String originalTitle, String title, String backdropPath, Double popularity,
-                 int voteCount, boolean video, String rating) {
+    public Movie(String posterPath, boolean adult, String overview, String releaseData,
+                 int[] genresIds, int id, String originalLanguage, String originalTitle,
+                 String title, String backdropPath, Double popularity, int voteCount,
+                 boolean video, String rating) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
         this.releaseData = releaseData;
-        this.genres = genres;
+        this.genresIds = genresIds;
         this.id = id;
+        this.originalLanguage = originalLanguage;
         this.originalTitle = originalTitle;
         this.title = title;
         this.backdropPath = backdropPath;
@@ -76,8 +80,12 @@ public class Movie {
         return releaseData;
     }
 
-    public Integer[] getGenres() {
-        return genres;
+    public int[] getGenreIds() {
+        return genresIds;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
     }
 
     public int getId() {
@@ -96,7 +104,7 @@ public class Movie {
         return backdropPath;
     }
 
-    public Double getPopularity() {
+    public double getPopularity() {
         return popularity;
     }
 

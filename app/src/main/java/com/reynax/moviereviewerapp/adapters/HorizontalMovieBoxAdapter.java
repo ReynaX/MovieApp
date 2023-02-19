@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.R;
+import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
 
 import java.util.List;
@@ -19,11 +20,11 @@ import java.util.Locale;
 
 public class HorizontalMovieBoxAdapter extends RecyclerView.Adapter<HorizontalMovieBoxAdapter.ViewHolder> {
 
-    private final List<Movie> items;
+    private final List<Content> items;
 
     private Fragment fragment;
 
-    public HorizontalMovieBoxAdapter(Fragment fragment, List<Movie> items) {
+    public HorizontalMovieBoxAdapter(Fragment fragment, List<Content> items) {
         this.items = items;
         this.fragment = fragment;
     }
@@ -36,7 +37,7 @@ public class HorizontalMovieBoxAdapter extends RecyclerView.Adapter<HorizontalMo
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalMovieBoxAdapter.ViewHolder holder, int position) {
-        final Movie movie = items.get(position);
+        final Content movie = items.get(position);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(String.format(Locale.ENGLISH, "%.1f", Double.parseDouble(movie.getRating())));
 

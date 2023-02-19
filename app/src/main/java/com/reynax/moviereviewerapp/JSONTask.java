@@ -1,7 +1,6 @@
 package com.reynax.moviereviewerapp;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -10,14 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.slider.Slider;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.reynax.moviereviewerapp.adapters.HorizontalMovieBoxAdapter;
 import com.reynax.moviereviewerapp.adapters.SliderAdapter;
+import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
-import com.reynax.moviereviewerapp.data.MoviesOutput;
+import com.reynax.moviereviewerapp.data.Series;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,13 +31,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONTask extends AsyncTask<String, Void, List<Movie>> {
+public class JSONTask extends AsyncTask<String, Void, List<Content>> {
     private final WeakReference<Fragment> fragmentReference;
     private final WeakReference<View> viewReference;
 
-    public JSONTask(@NonNull Fragment fragment, @NonNull View view) {
+    private final Globals.FRAGMENT_TYPE fragmentType;
+
+    public JSONTask(@NonNull Fragment fragment, @NonNull View view, Globals.FRAGMENT_TYPE fragmentType) {
         fragmentReference = new WeakReference<>(fragment);
         viewReference = new WeakReference<>(view);
+        this.fragmentType = fragmentType;
     }
 
     @Override
@@ -47,21 +49,21 @@ public class JSONTask extends AsyncTask<String, Void, List<Movie>> {
     }
 
     @Override
-    protected void onPostExecute(List<Movie> movies) {
+    protected void onPostExecute(List<Content> movies) {
         super.onPostExecute(movies);
 
         Fragment fragment = fragmentReference.get();
         View view = viewReference.get();
         if (fragment != null && view != null && movies != null) {
 
-            if(view instanceof RecyclerView) {
+            if (view instanceof RecyclerView) {
                 LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
                 manager.setOrientation(RecyclerView.HORIZONTAL);
                 RecyclerView list = (RecyclerView) view;
                 list.setLayoutManager(manager);
                 list.setAdapter(new HorizontalMovieBoxAdapter(fragment, movies));
                 list.setNestedScrollingEnabled(false);
-            }else if(view instanceof ViewPager2){
+            } else if (view instanceof ViewPager2) {
                 ViewPager2 slider = (ViewPager2) view;
                 slider.setAdapter(new SliderAdapter(fragment, movies));
             }
@@ -69,9 +71,9 @@ public class JSONTask extends AsyncTask<String, Void, List<Movie>> {
     }
 
     @Override
-    protected List<Movie> doInBackground(String... strings) {
+    protected List<Content> doInBackground(String... strings) {
         InputStream is;
-        List<Movie> movies = new ArrayList<>();
+        List<Content> movies = new ArrayList<>();
         try {
             URL url = new URL(strings[0] + "?api_key=" + Private.API_KEY + "&language=en-US&page=1");
             URLConnection request = url.openConnection();
@@ -82,8 +84,14 @@ public class JSONTask extends AsyncTask<String, Void, List<Movie>> {
             String jsonText = readAll(rd);
 
             Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Movie>>() {
-            }.getType();
+            Type listType;
+            if (fragmentType == Globals.FRAGMENT_TYPE.MOVIES) {
+                listType = new TypeToken<ArrayList<Movie>>() {
+                }.getType();
+            }else if (fragmentType == Globals.FRAGMENT_TYPE.SERIES) {
+                listType = new TypeToken<ArrayList<Series>>() {
+                }.getType();
+            }else return movies;
             movies = gson.fromJson(gson.fromJson(jsonText, JsonObject.class).get("results"), listType);
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="fr_content_incoming_releases">Incoming releases</string>
+    <string name="fr_content_fan_favorites">Fan favorites</string>
+
+    <string name="fr_movie_favorites_desc">This week\'s top movies</string>
+    <string name="fr_series_favorites_desc">Today\'s top TV series</string>
+
+    <string name="fr_movie_theaters">In theaters now</string>
+    <string name="fr_series_airing_now">TV shows airing now</string>
+    <string name="fr_movie_theaters_desc">Showtimes near you</string>
+    <string name="fr_series_theaters_desc">Everything new</string>
+    <string name="fr_movie_top_all_string">Top rated movies of all time</string>
+
+    <string name="fr_series_top_all_string">Top rated TV shows of all time</string>
+
 </resources>

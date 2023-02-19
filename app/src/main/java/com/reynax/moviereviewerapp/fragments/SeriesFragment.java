@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,7 @@ import com.reynax.moviereviewerapp.JSONTask;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.adapters.SliderAdapter;
 
-public class MoviesFragment extends Fragment {
+public class SeriesFragment extends Fragment {
     private ViewPager2 upcomingSlider;
 
     private final Handler upcomingSliderHandler = new Handler();
@@ -33,22 +34,28 @@ public class MoviesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
+
         favoritesList = view.findViewById(R.id.movies_fr_rv_favorites);
         newList = view.findViewById(R.id.movies_fr_rv_new);
         topList = view.findViewById(R.id.movies_fr_rv_top);
         upcomingSlider = view.findViewById(R.id.movies_fr_vp_releases);
 
-        JSONTask favoritesTask = new JSONTask(this, favoritesList, Globals.FRAGMENT_TYPE.MOVIES);
-        favoritesTask.execute("https://api.themoviedb.org/3/trending/movie/week");
+        ((TextView)view.findViewById(R.id.movies_fr_tv_favorites_desc)).setText(getString(R.string.fr_series_favorites_desc));
+        ((TextView)view.findViewById(R.id.movies_fr_tv_new)).setText(getString(R.string.fr_series_airing_now));
+        ((TextView)view.findViewById(R.id.movies_fr_tv_theaters_desc)).setText(getString(R.string.fr_series_theaters_desc));
+        ((TextView)view.findViewById(R.id.movies_fr_tv_top)).setText(getString(R.string.fr_series_top_all_string));
 
-        JSONTask latestTask = new JSONTask(this, newList, Globals.FRAGMENT_TYPE.MOVIES);
-        latestTask.execute("https://api.themoviedb.org/3/movie/now_playing");
+        JSONTask favoritesTask = new JSONTask(this, favoritesList, Globals.FRAGMENT_TYPE.SERIES);
+        favoritesTask.execute("https://api.themoviedb.org/3/tv/popular");
 
-        JSONTask topTask = new JSONTask(this, topList, Globals.FRAGMENT_TYPE.MOVIES);
-        topTask.execute("https://api.themoviedb.org/3/movie/top_rated");
+        JSONTask latestTask = new JSONTask(this, newList, Globals.FRAGMENT_TYPE.SERIES);
+        latestTask.execute("https://api.themoviedb.org/3/tv/on_the_air");
 
-        JSONTask upcomingTask = new JSONTask(this, upcomingSlider, Globals.FRAGMENT_TYPE.MOVIES);
-        upcomingTask.execute("https://api.themoviedb.org/3/movie/upcoming");
+        JSONTask topTask = new JSONTask(this, topList, Globals.FRAGMENT_TYPE.SERIES);
+        topTask.execute("https://api.themoviedb.org/3/tv/top_rated");
+
+        JSONTask upcomingTask = new JSONTask(this, upcomingSlider, Globals.FRAGMENT_TYPE.SERIES);
+        upcomingTask.execute("https://api.themoviedb.org/3/tv/airing_today");
 
         upcomingSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -68,7 +75,7 @@ public class MoviesFragment extends Fragment {
     }
 
     private final Runnable sliderIncrease = () ->
-        {upcomingSlider.setCurrentItem(upcomingSlider.getCurrentItem() + 1, true);};
+    {upcomingSlider.setCurrentItem(upcomingSlider.getCurrentItem() + 1, true);};
 
     private final Runnable sliderLoop = () -> {upcomingSlider.setCurrentItem(0, false);};
 }

@@ -12,18 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.R;
+import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
 
 import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder> {
 
-    private final List<Movie> movies;
+    private final List<Content> items;
 
     private final Fragment fragment;
 
-    public SliderAdapter(@NonNull Fragment fragment, @NonNull List<Movie> movies){
-        this.movies = movies;
+    public SliderAdapter(@NonNull Fragment fragment, @NonNull List<Content> items) {
+        this.items = items;
         this.fragment = fragment;
     }
 
@@ -35,10 +36,10 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Movie movie = movies.get(position);
-        holder.title.setText(movie.getTitle());
-        String posterPath = "https://image.tmdb.org/t/p/w500" + movie.getPosterPath();
-        String backdropPath = "https://image.tmdb.org/t/p/w500" + movie.getBackdropPath();
+        Content content = items.get(position);
+        holder.title.setText(content.getTitle());
+        String posterPath = "https://image.tmdb.org/t/p/w500" + content.getPosterPath();
+        String backdropPath = "https://image.tmdb.org/t/p/w500" + content.getBackdropPath();
 
         Glide.with(fragment).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
         Glide.with(fragment).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
@@ -46,7 +47,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

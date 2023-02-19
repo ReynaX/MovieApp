@@ -2,7 +2,7 @@ package com.reynax.moviereviewerapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MoviesOutput {
+public class ContentOutput {
     @SerializedName("page")
     private int page;
 
@@ -15,7 +15,7 @@ public class MoviesOutput {
     @SerializedName("totalPages")
     private int totalPages;
 
-    public MoviesOutput(int page, Object[] results, int totalResults, int totalPages) {
+    public ContentOutput(int page, Object[] results, int totalResults, int totalPages) {
         this.page = page;
         this.results = results;
         this.totalResults = totalResults;

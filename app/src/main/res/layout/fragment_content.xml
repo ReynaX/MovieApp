@@ -16,6 +16,17 @@
         android:background="#212121"
         tools:context=".fragments.HomeFragment">
 
+        <TextView
+            android:id="@+id/movies_fr_tv_theaters_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/fr_movie_theaters_desc"
+            android:textColor="#909090"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_new" />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/movies_fr_vp_releases"
             android:layout_width="0dp"
@@ -42,27 +53,27 @@
             android:id="@+id/movies_fr_tv_releases"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Incoming releases"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:text="@string/fr_content_incoming_releases"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TitleText" />
+
 
         <TextView
             android:id="@+id/movies_fr_tv_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fan favorites"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:text="@string/fr_content_fan_favorites"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movies_fr_vp_releases" />
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_vp_releases"
+            style="@style/TitleText" />
 
         <TextView
             android:id="@+id/movies_fr_tv_favorites_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This week's top TV and movies"
+            android:layout_marginStart="5dp"
+            android:text="@string/fr_movie_favorites_desc"
             android:textColor="#909090"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,18 +91,17 @@
             android:id="@+id/movies_fr_tv_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="In theaters now"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:text="@string/fr_movie_theaters"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites" />
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites"
+            style="@style/TitleText" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_fr_rv_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_new">
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_theaters_desc">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -108,11 +118,11 @@
             android:id="@+id/movies_fr_tv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Top rated movies all time"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:text="@string/fr_movie_top_all_string"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new" />
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new"
+            style="@style/TitleText" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
