@@ -2,6 +2,7 @@
     <string name="app_name">MovieApp</string>
     <string name="fr_content_incoming_releases">Incoming releases</string>
     <string name="fr_content_fan_favorites">Fan favorites</string>
+    <string name="fr_content_see_all_button">SEE ALL</string>
 
     <string name="fr_movie_favorites_desc">This week\'s top movies</string>
     <string name="fr_series_favorites_desc">Today\'s top TV series</string>
@@ -13,5 +14,8 @@
     <string name="fr_movie_top_all_string">Top rated movies of all time</string>
 
     <string name="fr_series_top_all_string">Top rated TV shows of all time</string>
-
+    <string name="title_activity_vertical_list">VerticalListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

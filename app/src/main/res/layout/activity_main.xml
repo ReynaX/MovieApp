@@ -10,7 +10,7 @@
     tools:context=".activities.MainActivity">
 
     <SearchView
-        android:id="@+id/main_sv_search"
+        android:id="@+id/v_list_sv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#393939"
@@ -28,7 +28,7 @@
         android:background="#303030"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_sv_search"
+        app:layout_constraintTop_toBottomOf="@+id/v_list_sv_search"
         app:tabGravity="center"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="#ffffff"
@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/main_tl_category"
         app:layout_constraintTop_toBottomOf="@id/main_tl_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

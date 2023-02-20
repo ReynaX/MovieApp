@@ -5,11 +5,14 @@ import androidx.loader.content.AsyncTaskLoader;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.hotspot2.pps.Credential;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 import com.reynax.moviereviewerapp.JSONTask;
@@ -64,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             mediaCategory.addTab(mediaCategory.newTab().setText("Streaming & TV"));
             mediaCategory.addTab(mediaCategory.newTab().setText("Celebrities"));
         }
+    }
+
+    public void onSeeAllButtonClicked(View view){
+        Log.d("aha", String.valueOf(view.getId()));
+
+        Intent intent = new Intent(this, VerticalListActivity.class);
+        startActivity(intent);
     }
 
 }

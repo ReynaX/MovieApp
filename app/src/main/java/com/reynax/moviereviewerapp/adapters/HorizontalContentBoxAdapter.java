@@ -1,5 +1,6 @@
 package com.reynax.moviereviewerapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,36 +14,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
-import com.reynax.moviereviewerapp.data.Movie;
 
 import java.util.List;
 import java.util.Locale;
 
-public class HorizontalMovieBoxAdapter extends RecyclerView.Adapter<HorizontalMovieBoxAdapter.ViewHolder> {
+public class HorizontalContentBoxAdapter extends RecyclerView.Adapter<HorizontalContentBoxAdapter.ViewHolder> {
 
     private final List<Content> items;
 
-    private Fragment fragment;
+    private final Context context;
 
-    public HorizontalMovieBoxAdapter(Fragment fragment, List<Content> items) {
+    public HorizontalContentBoxAdapter(Context context, List<Content> items) {
         this.items = items;
-        this.fragment = fragment;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public HorizontalMovieBoxAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_movie_box, parent, false));
+    public HorizontalContentBoxAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_content_h_box, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HorizontalMovieBoxAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HorizontalContentBoxAdapter.ViewHolder holder, int position) {
         final Content movie = items.get(position);
         holder.title.setText(movie.getTitle());
         holder.rating.setText(String.format(Locale.ENGLISH, "%.1f", Double.parseDouble(movie.getRating())));
 
         String posterPath = "https://image.tmdb.org/t/p/w500" + movie.getPosterPath();
-        Glide.with(fragment).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
+        Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
     }
 
     @Override
@@ -52,7 +52,6 @@ public class HorizontalMovieBoxAdapter extends RecyclerView.Adapter<HorizontalMo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
-
         private final TextView rating;
 
         private final ImageView poster;
@@ -60,9 +59,9 @@ public class HorizontalMovieBoxAdapter extends RecyclerView.Adapter<HorizontalMo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.h_movie_box_tv_title);
-            rating = itemView.findViewById(R.id.h_movie_box_tv_rating);
-            poster = itemView.findViewById(R.id.h_movie_box_iv_poster);
+            title = itemView.findViewById(R.id.h_content_box_tv_title);
+            rating = itemView.findViewById(R.id.h_content_box_tv_rating);
+            poster = itemView.findViewById(R.id.h_content_box_iv_poster);
         }
     }
 }

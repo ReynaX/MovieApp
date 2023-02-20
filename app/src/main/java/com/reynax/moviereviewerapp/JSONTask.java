@@ -12,7 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.reynax.moviereviewerapp.adapters.HorizontalMovieBoxAdapter;
+import com.reynax.moviereviewerapp.adapters.HorizontalContentBoxAdapter;
 import com.reynax.moviereviewerapp.adapters.SliderAdapter;
 import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
@@ -61,11 +61,11 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
                 manager.setOrientation(RecyclerView.HORIZONTAL);
                 RecyclerView list = (RecyclerView) view;
                 list.setLayoutManager(manager);
-                list.setAdapter(new HorizontalMovieBoxAdapter(fragment, movies));
+                list.setAdapter(new HorizontalContentBoxAdapter(fragment.getContext(), movies));
                 list.setNestedScrollingEnabled(false);
             } else if (view instanceof ViewPager2) {
                 ViewPager2 slider = (ViewPager2) view;
-                slider.setAdapter(new SliderAdapter(fragment, movies));
+                slider.setAdapter(new SliderAdapter(fragment.getContext(), movies));
             }
         }
     }

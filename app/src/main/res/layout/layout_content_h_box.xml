@@ -1,22 +1,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/h_movie_box_cl_main"
+    android:id="@+id/h_content_box_cl_main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:background="#212121">
 
     <ImageView
-        android:id="@+id/h_movie_box_iv_star"
+        android:id="@+id/h_content_box_iv_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/h_movie_box_iv_poster"
+        app:layout_constraintTop_toBottomOf="@+id/h_content_box_iv_poster"
         app:srcCompat="@drawable/star_filled" />
 
     <ImageView
-        android:id="@+id/h_movie_box_iv_poster"
+        android:id="@+id/h_content_box_iv_poster"
         android:layout_width="150dp"
         android:layout_height="225dp"
         android:adjustViewBounds="true"
@@ -25,23 +25,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/h_movie_box_tv_rating"
+        android:id="@+id/h_content_box_tv_rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/h_movie_box_tv_title"
-        app:layout_constraintStart_toEndOf="@+id/h_movie_box_iv_star"
-        app:layout_constraintTop_toBottomOf="@+id/h_movie_box_iv_poster" />
+        app:layout_constraintBottom_toTopOf="@+id/h_content_box_tv_title"
+        app:layout_constraintStart_toEndOf="@+id/h_content_box_iv_star"
+        app:layout_constraintTop_toBottomOf="@+id/h_content_box_iv_poster" />
 
     <TextView
-        android:id="@+id/h_movie_box_tv_title"
+        android:id="@+id/h_content_box_tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/h_movie_box_iv_star" />
+        app:layout_constraintTop_toBottomOf="@+id/h_content_box_iv_star" />
 </androidx.constraintlayout.widget.ConstraintLayout>

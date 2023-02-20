@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/v_content_box_cl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <TextView
+        android:id="@+id/v_content_box_tv_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="#696969"
+        app:layout_constraintStart_toEndOf="@+id/v_content_box_tv_year"
+        app:layout_constraintTop_toTopOf="@+id/v_content_box_tv_year" />
+
+    <TextView
+        android:id="@+id/v_content_box_tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textColor="#696969"
+        app:layout_constraintStart_toEndOf="@+id/v_content_box_iv_poster"
+        app:layout_constraintTop_toBottomOf="@+id/v_content_box_tv_title" />
+
+    <ImageView
+        android:id="@+id/v_content_box_iv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/v_content_box_iv_poster"
+        app:layout_constraintTop_toBottomOf="@+id/v_content_box_tv_year"
+        app:srcCompat="@drawable/star_filled" />
+
+    <ImageView
+        android:id="@+id/v_content_box_iv_poster"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/v_content_box_tv_rating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/v_content_box_iv_star"
+        app:layout_constraintTop_toBottomOf="@+id/v_content_box_tv_year" />
+
+    <TextView
+        android:id="@+id/v_content_box_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/v_content_box_iv_poster"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

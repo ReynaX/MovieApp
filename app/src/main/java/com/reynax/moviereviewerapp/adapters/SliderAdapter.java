@@ -1,5 +1,6 @@
 package com.reynax.moviereviewerapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
 
     private final List<Content> items;
 
-    private final Fragment fragment;
+    private final Context context;
 
-    public SliderAdapter(@NonNull Fragment fragment, @NonNull List<Content> items) {
+    public SliderAdapter(@NonNull Context context, @NonNull List<Content> items) {
         this.items = items;
-        this.fragment = fragment;
+        this.context = context;
     }
 
     @NonNull
@@ -41,8 +42,8 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
         String posterPath = "https://image.tmdb.org/t/p/w500" + content.getPosterPath();
         String backdropPath = "https://image.tmdb.org/t/p/w500" + content.getBackdropPath();
 
-        Glide.with(fragment).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
-        Glide.with(fragment).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
+        Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
+        Glide.with(context).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
     }
 
     @Override

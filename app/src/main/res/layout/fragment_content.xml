@@ -35,20 +35,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movies_fr_tv_releases" />
 
-<!--        <Button-->
-<!--            android:id="@+id/movies_fr_btn_see_fav"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            android:onClick="onSeeAllButtonClicked"-->
-<!--            android:text="SEE ALL"-->
-<!--            android:textColor="#4169E1"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/movies_fr_tv_favorites_desc"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.917"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/movies_fr_tv_favorites"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/movies_fr_vp_releases" />-->
-
         <TextView
             android:id="@+id/movies_fr_tv_releases"
             android:layout_width="wrap_content"
@@ -123,6 +109,20 @@
             app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new"
             style="@style/TitleText" />
 
+        <Button
+            android:id="@+id/movies_fr_btn_see_favorites"
+            style="@style/SeeAllButton"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:onClick="onSeeAllButtonClicked"
+            android:text="@string/fr_content_see_all_button"
+            android:textAlignment="viewEnd"
+            app:layout_constraintBottom_toTopOf="@+id/movies_fr_rv_favorites"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/movies_fr_tv_favorites_desc"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_releases"
+            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
