@@ -19,7 +19,7 @@
             android:id="@+id/v_list_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:background="#393939"
             android:minWidth="50dp"
             android:minHeight="50dp"
             android:onClick="onBackButtonPressed"
@@ -40,6 +40,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/v_list_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        style="@style/TitleText" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/v_list_rv_main_view"
         android:layout_width="match_parent"
@@ -47,5 +54,13 @@
         tools:context=".activities.VerticalListActivity">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/v_list_load_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/v_list_load_more"
+        style="@style/SeeAllButton"
+        />
 
 </LinearLayout>

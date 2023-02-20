@@ -8,13 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
-import com.reynax.moviereviewerapp.data.Movie;
 
 import java.util.List;
 
@@ -39,11 +37,15 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Content content = items.get(position);
         holder.title.setText(content.getTitle());
-        String posterPath = "https://image.tmdb.org/t/p/w500" + content.getPosterPath();
-        String backdropPath = "https://image.tmdb.org/t/p/w500" + content.getBackdropPath();
 
-        Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
-        Glide.with(context).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
+        if(content.getPosterPath() != null) {
+            String posterPath = "https://image.tmdb.org/t/p/w500" + content.getPosterPath();
+            Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
+        }else holder.poster.setImageResource(R.drawable.placeholder);
+        if(content.getBackdropPath() != null) {
+            String backdropPath = "https://image.tmdb.org/t/p/w500" + content.getBackdropPath();
+            Glide.with(context).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
+        }else holder.backdrop.setImageResource(R.drawable.placeholder);
     }
 
     @Override

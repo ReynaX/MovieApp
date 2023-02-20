@@ -2,7 +2,9 @@ package com.reynax.moviereviewerapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Series implements Content{
+public class Series implements Content {
+    private Details details;
+
     @SerializedName("poster_path")
     private final String posterPath;
 
@@ -10,7 +12,7 @@ public class Series implements Content{
     private final double popularity;
 
     @SerializedName("id")
-    private final int id;
+    private final long id;
 
     @SerializedName("backdrop_path")
     private final String backdropPath;
@@ -34,7 +36,7 @@ public class Series implements Content{
     private final String originalLanguage;
 
     @SerializedName("vote_count")
-    private final int voteCount;
+    private final long voteCount;
 
     @SerializedName("name")
     private final String title;
@@ -42,9 +44,9 @@ public class Series implements Content{
     @SerializedName("original_name")
     private final String originalName;
 
-    public Series(String posterPath, double popularity, int id, String backdropPath,
+    public Series(String posterPath, double popularity, long id, String backdropPath,
                   String rating, String overview, String firstAirDate, String[] originCountry,
-                  int[] genreIds, String originalLanguage, int voteCount, String title, String originalName) {
+                  int[] genreIds, String originalLanguage, long voteCount, String title, String originalName) {
         this.posterPath = posterPath;
         this.popularity = popularity;
         this.id = id;
@@ -58,6 +60,7 @@ public class Series implements Content{
         this.voteCount = voteCount;
         this.title = title;
         this.originalName = originalName;
+        this.details = null;
     }
 
     public String getPosterPath() {
@@ -68,18 +71,22 @@ public class Series implements Content{
         return popularity;
     }
 
-    public int getId() {
+    @Override
+    public long getId() {
         return id;
     }
 
+    @Override
     public String getBackdropPath() {
         return backdropPath;
     }
 
+    @Override
     public String getRating() {
         return rating;
     }
 
+    @Override
     public String getOverview() {
         return overview;
     }
@@ -92,23 +99,37 @@ public class Series implements Content{
         return originCountry;
     }
 
+    @Override
     public int[] getGenreIds() {
         return genreIds;
     }
 
+    @Override
     public String getOriginalLanguage() {
         return originalLanguage;
     }
 
-    public int getVoteCount() {
+    @Override
+    public long getVoteCount() {
         return voteCount;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
     public String getOriginalName() {
         return originalName;
+    }
+
+    @Override
+    public Details getDetails() {
+        return details;
+    }
+
+    @Override
+    public void setDetails(Details details) {
+        this.details = details;
     }
 }

@@ -3,6 +3,9 @@ package com.reynax.moviereviewerapp.data;
 import com.google.gson.annotations.SerializedName;
 
 public class Movie implements Content {
+
+    private Details details;
+
     @SerializedName("poster_path")
     private final String posterPath;
 
@@ -16,10 +19,10 @@ public class Movie implements Content {
     private final String releaseData;
 
     @SerializedName("genre_ids")
-    private final int[] genresIds;
+    private final int[] genreIds;
 
     @SerializedName("id")
-    private final int id;
+    private final long id;
 
     @SerializedName("original_language")
     private final String originalLanguage;
@@ -36,7 +39,7 @@ public class Movie implements Content {
     private final Double popularity;
 
     @SerializedName("vote_count")
-    private final int voteCount;
+    private final long voteCount;
 
     @SerializedName("video")
     private final boolean video;
@@ -45,14 +48,14 @@ public class Movie implements Content {
     private final String rating;
 
     public Movie(String posterPath, boolean adult, String overview, String releaseData,
-                 int[] genresIds, int id, String originalLanguage, String originalTitle,
-                 String title, String backdropPath, Double popularity, int voteCount,
+                 int[] genreIds, long id, String originalLanguage, String originalTitle,
+                 String title, String backdropPath, Double popularity, long voteCount,
                  boolean video, String rating) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
         this.releaseData = releaseData;
-        this.genresIds = genresIds;
+        this.genreIds = genreIds;
         this.id = id;
         this.originalLanguage = originalLanguage;
         this.originalTitle = originalTitle;
@@ -62,8 +65,10 @@ public class Movie implements Content {
         this.voteCount = voteCount;
         this.video = video;
         this.rating = rating;
+        this.details = null;
     }
 
+    @Override
     public String getPosterPath() {
         return posterPath;
     }
@@ -72,6 +77,7 @@ public class Movie implements Content {
         return adult;
     }
 
+    @Override
     public String getOverview() {
         return overview;
     }
@@ -80,15 +86,18 @@ public class Movie implements Content {
         return releaseData;
     }
 
+    @Override
     public int[] getGenreIds() {
-        return genresIds;
+        return genreIds;
     }
 
+    @Override
     public String getOriginalLanguage() {
         return originalLanguage;
     }
 
-    public int getId() {
+    @Override
+    public long getId() {
         return id;
     }
 
@@ -96,19 +105,23 @@ public class Movie implements Content {
         return originalTitle;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public String getBackdropPath() {
         return backdropPath;
     }
 
+    @Override
     public double getPopularity() {
         return popularity;
     }
 
-    public int getVoteCount() {
+    @Override
+    public long getVoteCount() {
         return voteCount;
     }
 
@@ -116,7 +129,18 @@ public class Movie implements Content {
         return video;
     }
 
+    @Override
     public String getRating() {
         return rating;
+    }
+
+    @Override
+    public Details getDetails() {
+        return details;
+    }
+
+    @Override
+    public void setDetails(Details details) {
+        this.details = details;
     }
 }

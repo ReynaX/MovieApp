@@ -20,8 +20,6 @@ import com.reynax.moviereviewerapp.adapters.SliderAdapter;
 public class MoviesFragment extends Fragment {
     private ViewPager2 upcomingSlider;
 
-    private final Handler upcomingSliderHandler = new Handler();
-
     private RecyclerView favoritesList;
 
     private RecyclerView newList;
@@ -38,17 +36,23 @@ public class MoviesFragment extends Fragment {
         topList = view.findViewById(R.id.movies_fr_rv_top);
         upcomingSlider = view.findViewById(R.id.movies_fr_vp_releases);
 
-        JSONTask favoritesTask = new JSONTask(this, favoritesList, Globals.FRAGMENT_TYPE.MOVIES);
-        favoritesTask.execute("https://api.themoviedb.org/3/trending/movie/week");
+        if(this.getContext() != null) {
+            JSONTask favoritesTask = new JSONTask(this.getContext(), favoritesList,
+                    Globals.DATA_TYPE.MOVIES, Globals.ACTIVITY_TYPE.MAIN);
+            favoritesTask.execute("https://api.themoviedb.org/3/trending/movie/week");
 
-        JSONTask latestTask = new JSONTask(this, newList, Globals.FRAGMENT_TYPE.MOVIES);
-        latestTask.execute("https://api.themoviedb.org/3/movie/now_playing");
+            JSONTask latestTask = new JSONTask(this.getContext(), newList,
+                    Globals.DATA_TYPE.MOVIES, Globals.ACTIVITY_TYPE.MAIN);
+            latestTask.execute("https://api.themoviedb.org/3/movie/now_playing");
 
-        JSONTask topTask = new JSONTask(this, topList, Globals.FRAGMENT_TYPE.MOVIES);
-        topTask.execute("https://api.themoviedb.org/3/movie/top_rated");
+            JSONTask topTask = new JSONTask(this.getContext(), topList,
+                    Globals.DATA_TYPE.MOVIES, Globals.ACTIVITY_TYPE.MAIN);
+            topTask.execute("https://api.themoviedb.org/3/movie/top_rated");
 
-        JSONTask upcomingTask = new JSONTask(this, upcomingSlider, Globals.FRAGMENT_TYPE.MOVIES);
-        upcomingTask.execute("https://api.themoviedb.org/3/movie/upcoming");
+            JSONTask upcomingTask = new JSONTask(this.getContext(), upcomingSlider,
+                    Globals.DATA_TYPE.MOVIES, Globals.ACTIVITY_TYPE.MAIN);
+            upcomingTask.execute("https://api.themoviedb.org/3/movie/upcoming");
+        }
 
         upcomingSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

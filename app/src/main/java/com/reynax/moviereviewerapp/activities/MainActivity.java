@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.reynax.moviereviewerapp.JSONTask;
@@ -72,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
     public void onSeeAllButtonClicked(View view){
         Log.d("aha", String.valueOf(view.getId()));
 
+        String title = null;
+        if(view.getId() == R.id.movies_fr_btn_see_favorites)
+            title = "Fan favorites";
         Intent intent = new Intent(this, VerticalListActivity.class);
+        intent.putExtra("title", title);
         startActivity(intent);
     }
 
