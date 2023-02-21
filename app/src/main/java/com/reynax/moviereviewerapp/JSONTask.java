@@ -51,15 +51,6 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        View view = viewReference.get();
-        if(contextReference.get() != null && view != null){
-
-        }
-    }
-
-    @Override
     protected void onPostExecute(List<Content> movies) {
         super.onPostExecute(movies);
 
@@ -86,7 +77,7 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
                     InputStream is = url.openStream();
                     BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
             ) {
-                String jsonText = readAll(rd);
+                String jsonText = Globals.readAll(rd);
                 Gson gson = new Gson();
                 Type listType;
                 switch (dataType) {
@@ -102,21 +93,12 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
                         return movies;
                 }
                 movies = gson.fromJson(gson.fromJson(jsonText, JsonObject.class).get("results"), listType);
-                loadDetails(movies);
+                Globals.loadDetails(movies, dataType);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return movies;
-    }
-
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
     }
 
     private void onPostExecuteMainActivity(List<Content> movies) {
@@ -147,42 +129,6 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
             list.setLayoutManager(manager);
             list.setAdapter(new VerticalContentBoxAdapter(context, movies));
             list.setNestedScrollingEnabled(false);
-        }
-    }
-
-    private void loadDetails(List<Content> items) {
-        String contentType = "";
-        Class<?> contentClass = Details.class;
-        switch (dataType) {
-            case MOVIES:
-                contentType = "movie";
-                contentClass = MovieDetails.class;
-                break;
-            case SERIES:
-                contentType = "tv";
-                contentClass = SeriesDetails.class;
-                break;
-        }
-
-        for (Content item : items) {
-            String urlString = String.format(Locale.ENGLISH,
-                    "https://api.themoviedb.org/3/%s/%d?api_key=%s&language=en-US",
-                    contentType, item.getId(), Private.API_KEY);
-            try {
-                URL url = new URL(urlString);
-                URLConnection request = url.openConnection();
-                request.connect();
-
-                try (
-                        InputStream is = url.openStream();
-                        BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
-                ) {
-                    String jsonText = readAll(rd);
-                    item.setDetails(new Gson().fromJson(jsonText, (Type) contentClass));
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 }

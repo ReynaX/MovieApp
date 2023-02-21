@@ -1,10 +1,12 @@
 package com.reynax.moviereviewerapp.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -14,6 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.reynax.moviereviewerapp.Globals;
+import com.reynax.moviereviewerapp.JSONTask;
+import com.reynax.moviereviewerapp.Private;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
@@ -21,6 +29,15 @@ import com.reynax.moviereviewerapp.data.MovieDetails;
 import com.reynax.moviereviewerapp.data.Series;
 import com.reynax.moviereviewerapp.data.SeriesDetails;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,9 +49,12 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
     private List<Content> items;
     private final Context context;
 
+    private int pagesLoaded;
+
     public VerticalContentBoxAdapter(@NonNull Context context, @NonNull List<Content> items) {
         this.context = context;
         this.items = items;
+        this.pagesLoaded = 1;
     }
 
     @NonNull
@@ -101,6 +121,84 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
             title = itemView.findViewById(R.id.v_content_box_tv_title);
             year = itemView.findViewById(R.id.v_content_box_tv_year);
             length = itemView.findViewById(R.id.v_content_box_tv_length);
+        }
+    }
+
+    public void loadMore(String q, Context context, Button loadMoreButton){
+        new LoadMoreTask(context, loadMoreButton).execute(q);
+    }
+
+    public class LoadMoreTask extends AsyncTask<String, Void, List<Content>>{
+        private final Context context;
+        private final Button loadMoreButton;
+        public LoadMoreTask(@NonNull Context context, @NonNull Button loadMoreButton){
+            this.context = context;
+            this.loadMoreButton = loadMoreButton;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadMoreButton.setText(context.getString(R.string.v_list_load_more_loading));
+            loadMoreButton.setActivated(false);
+        }
+
+        @Override
+        protected List<Content> doInBackground(String... strings) {
+            List<Content> movies = new ArrayList<>();
+            Globals.DATA_TYPE dataType;
+            if(items == null || items.size() == 0)
+                return movies;
+
+            if(items.get(0) instanceof Movie)
+                dataType = Globals.DATA_TYPE.MOVIES;
+            else if(items.get(0) instanceof Series)
+                dataType = Globals.DATA_TYPE.SERIES;
+            else return movies;
+
+            try {
+                URL url = new URL(strings[0] + "?api_key=" + Private.API_KEY + "&language=en-US&page=" + (pagesLoaded + 1));
+                URLConnection request = url.openConnection();
+                request.connect();
+
+                try (
+                        InputStream is = url.openStream();
+                        BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
+                ) {
+                    String jsonText = Globals.readAll(rd);
+                    Gson gson = new Gson();
+                    Type listType;
+                    switch (dataType) {
+                        case MOVIES:
+                            listType = new TypeToken<ArrayList<Movie>>() {
+                            }.getType();
+                            break;
+                        case SERIES:
+                            listType = new TypeToken<ArrayList<Series>>() {
+                            }.getType();
+                            break;
+                        default:
+                            return movies;
+                    }
+                    movies = gson.fromJson(gson.fromJson(jsonText, JsonObject.class).get("results"), listType);
+                    Globals.loadDetails(movies, dataType);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return movies;
+        }
+
+        @Override
+        protected void onPostExecute(List<Content> contents) {
+            super.onPostExecute(contents);
+            if(contents != null && contents.size() > 0) {
+                items.addAll(contents);
+                notifyDataSetChanged();
+                ++pagesLoaded;
+            }
+            loadMoreButton.setText(context.getString(R.string.v_list_load_more));
+            loadMoreButton.setActivated(true);
         }
     }
 }

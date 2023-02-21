@@ -56,7 +56,7 @@
         android:id="@+id/v_list_rv_main_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/v_list_load_more"
+        app:layout_constraintBottom_toTopOf="@+id/v_list_btn_load_more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_list_tv_title">
@@ -64,13 +64,14 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/v_list_load_more"
+        android:id="@+id/v_list_btn_load_more"
+        style="@style/SeeAllButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:onClick="onLoadMoreButtonPressed"
         android:text="@string/v_list_load_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/SeeAllButton"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -26,7 +27,10 @@ public class VerticalListActivity extends AppCompatActivity {
     private RecyclerView list;
     private TextView title;
     private SearchView searchView;
+    private Button loadMoreButton;
+
     private Globals.DATA_TYPE dataType;
+    private String query;
 
     private List<Content> items = null;
     @Override
@@ -38,9 +42,10 @@ public class VerticalListActivity extends AppCompatActivity {
         list = findViewById(R.id.v_list_rv_main_view);
         title = findViewById(R.id.v_list_tv_title);
         searchView = findViewById(R.id.v_list_sv_search);
+        loadMoreButton = findViewById(R.id.v_list_btn_load_more);
 
         title.setText(extras.getString("title"));
-        String query = (String) extras.get("query");
+        this.query = (String) extras.get("query");
         this.dataType = (Globals.DATA_TYPE) extras.get("dataType");
 
         if (this.getApplicationContext() != null) {
@@ -68,6 +73,15 @@ public class VerticalListActivity extends AppCompatActivity {
 
     public void onBackButtonPressed(View view) {
         onBackPressed();
+    }
+
+    public void onLoadMoreButtonPressed(View view){
+        String q = "https://api.themoviedb.org/3/" + this.query;
+
+        VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
+        if(adapter != null){
+            adapter.loadMore(q, getApplicationContext(), loadMoreButton);
+        }
     }
 
     private void hideNavigationBar(){

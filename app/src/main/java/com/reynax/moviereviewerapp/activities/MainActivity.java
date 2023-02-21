@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.movies_fr_btn_see_theaters) {
             query = categoryPager.getCurrentItem() == 0 ? "movie/now_playing" : "tv/on_the_air";
             title = "New releases";
-        }
+        } else return;
 
         Intent intent = new Intent(this, VerticalListActivity.class);
         intent.putExtra("query", query);
