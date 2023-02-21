@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/v_list_ll_main_layout"
+    android:id="@+id/v_list_cl_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#191919"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="#191919">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/v_list_btn_back"
@@ -42,25 +44,33 @@
 
     <TextView
         android:id="@+id/v_list_tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        style="@style/TitleText" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        style="@style/TitleText"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/v_list_rv_main_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activities.VerticalListActivity">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/v_list_load_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_list_tv_title">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/v_list_load_more"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/v_list_load_more"
-        style="@style/SeeAllButton"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/SeeAllButton"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

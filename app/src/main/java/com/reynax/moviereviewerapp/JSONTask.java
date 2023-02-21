@@ -53,6 +53,10 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        View view = viewReference.get();
+        if(contextReference.get() != null && view != null){
+
+        }
     }
 
     @Override

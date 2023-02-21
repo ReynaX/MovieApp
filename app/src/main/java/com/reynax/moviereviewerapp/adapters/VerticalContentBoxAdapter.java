@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,15 +18,18 @@ import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
 import com.reynax.moviereviewerapp.data.MovieDetails;
+import com.reynax.moviereviewerapp.data.Series;
+import com.reynax.moviereviewerapp.data.SeriesDetails;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalContentBoxAdapter.ViewHolder> {
-    private final List<Content> items;
+    private List<Content> items;
     private final Context context;
 
     public VerticalContentBoxAdapter(@NonNull Context context, @NonNull List<Content> items) {
@@ -57,12 +61,29 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
             LocalDate date = LocalDate.parse(releaseDate);
             holder.year.setText(String.format(Locale.ENGLISH, "%d", date.getYear()));
             holder.length.setText(String.format(Locale.ENGLISH, "%d min", length));
+        }else if(item instanceof Series){
+            Series series = (Series) item;
+            long seasons = ((SeriesDetails)series.getDetails()).getNumberOfSeasons();
+            long episodes = ((SeriesDetails)series.getDetails()).getNumberOfEpisodes();
+
+            holder.year.setText(String.format(Locale.ENGLISH, "%d seasons", seasons));
+            holder.length.setText(String.format(Locale.ENGLISH, "%d episodes", episodes));
         }
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+
+    public void filter(List<Content> items){
+        this.items = items;
+        notifyDataSetChanged();
+    }
+
+    public List<Content> getItems(){
+        return items;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -6,8 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:paddingBottom="?attr/actionBarSize">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movies_fr_cl_main"
@@ -16,9 +17,25 @@
         android:background="#212121"
         tools:context=".fragments.HomeFragment">
 
+        <Button
+            android:id="@+id/movies_fr_btn_see_theaters"
+            style="@style/SeeAllButton"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:onClick="onSeeAllButtonClicked"
+            android:text="@string/fr_content_see_all_button"
+            android:textAlignment="viewEnd"
+            app:layout_constraintBottom_toTopOf="@+id/movies_fr_rv_new"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/movies_fr_tv_theaters_desc"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_favorites"
+            app:layout_constraintVertical_bias="1.0" />
+
         <TextView
             android:id="@+id/movies_fr_tv_theaters_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="@string/fr_movie_theaters_desc"
@@ -37,77 +54,13 @@
 
         <TextView
             android:id="@+id/movies_fr_tv_releases"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fr_content_incoming_releases"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/TitleText" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/movies_fr_tv_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fr_content_fan_favorites"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movies_fr_vp_releases"
-            style="@style/TitleText" />
-
-        <TextView
-            android:id="@+id/movies_fr_tv_favorites_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/fr_movie_favorites_desc"
-            android:textColor="#909090"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movies_fr_tv_favorites" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_fr_rv_favorites"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_favorites_desc" />
-
-        <TextView
-            android:id="@+id/movies_fr_tv_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fr_movie_theaters"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites"
-            style="@style/TitleText" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_fr_rv_new"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_theaters_desc">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movies_fr_rv_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_top" />
-
-        <TextView
-            android:id="@+id/movies_fr_tv_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fr_movie_top_all_string"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new"
-            style="@style/TitleText" />
 
         <Button
             android:id="@+id/movies_fr_btn_see_favorites"
@@ -123,6 +76,71 @@
             app:layout_constraintStart_toEndOf="@+id/movies_fr_tv_favorites_desc"
             app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_releases"
             app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_favorites"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fr_content_fan_favorites"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_vp_releases" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_favorites_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@string/fr_movie_favorites_desc"
+            android:textColor="#909090"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_tv_favorites" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_favorites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_favorites_desc" />
+
+        <TextView
+            android:id="@+id/movies_fr_tv_new"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fr_movie_theaters"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movies_fr_rv_favorites" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_theaters_desc">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/movies_fr_tv_top"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fr_movie_top_all_string"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_new" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_fr_rv_top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_top" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
