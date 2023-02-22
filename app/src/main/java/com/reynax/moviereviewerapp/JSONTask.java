@@ -1,7 +1,9 @@
 package com.reynax.moviereviewerapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -12,10 +14,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.reynax.moviereviewerapp.activities.VerticalListActivity;
 import com.reynax.moviereviewerapp.adapters.HorizontalContentBoxAdapter;
 import com.reynax.moviereviewerapp.adapters.SliderAdapter;
 import com.reynax.moviereviewerapp.adapters.VerticalContentBoxAdapter;
 import com.reynax.moviereviewerapp.data.Content;
+import com.reynax.moviereviewerapp.data.ContentDetailsListener;
 import com.reynax.moviereviewerapp.data.Details;
 import com.reynax.moviereviewerapp.data.Movie;
 import com.reynax.moviereviewerapp.data.MovieDetails;
@@ -37,14 +41,12 @@ import java.util.List;
 import java.util.Locale;
 
 public class JSONTask extends AsyncTask<String, Void, List<Content>> {
-    private final WeakReference<Context> contextReference;
     private final WeakReference<View> viewReference;
 
     private final Globals.DATA_TYPE dataType;
     private final Globals.ACTIVITY_TYPE activityType;
 
-    public JSONTask(@NonNull Context context, @NonNull View view, Globals.DATA_TYPE dataType, Globals.ACTIVITY_TYPE activityType) {
-        this.contextReference = new WeakReference<>(context);
+    public JSONTask(@NonNull View view, Globals.DATA_TYPE dataType, Globals.ACTIVITY_TYPE activityType) {
         this.viewReference = new WeakReference<>(view);
         this.dataType = dataType;
         this.activityType = activityType;
@@ -103,31 +105,32 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
 
     private void onPostExecuteMainActivity(List<Content> movies) {
         View view = viewReference.get();
-        Context context = contextReference.get();
-        if (context != null && view != null && movies != null) {
+        if (view != null && movies != null) {
             if (view instanceof RecyclerView) {
                 LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
                 manager.setOrientation(RecyclerView.HORIZONTAL);
                 RecyclerView list = (RecyclerView) view;
                 list.setLayoutManager(manager);
-                list.setAdapter(new HorizontalContentBoxAdapter(context, movies));
+                list.setAdapter(new HorizontalContentBoxAdapter(movies, item ->
+                        new ContentDetailsListener(view.getContext()).onItemClick(item)));
                 list.setNestedScrollingEnabled(false);
             } else if (view instanceof ViewPager2) {
                 ViewPager2 slider = (ViewPager2) view;
-                slider.setAdapter(new SliderAdapter(context, movies));
+                slider.setAdapter(new SliderAdapter(movies, item ->
+                        new ContentDetailsListener(view.getContext()).onItemClick(item)));
             }
         }
     }
 
     private void onPostExecuteVerticalListActivity(List<Content> movies) {
         View view = viewReference.get();
-        Context context = contextReference.get();
-        if (context != null && view != null && movies != null) {
+        if (view != null && movies != null) {
             LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
             manager.setOrientation(RecyclerView.VERTICAL);
             RecyclerView list = (RecyclerView) view;
             list.setLayoutManager(manager);
-            list.setAdapter(new VerticalContentBoxAdapter(context, movies));
+            list.setAdapter(new VerticalContentBoxAdapter(movies,
+                    item -> new ContentDetailsListener(view.getContext()).onItemClick(item)));
             list.setNestedScrollingEnabled(false);
         }
     }

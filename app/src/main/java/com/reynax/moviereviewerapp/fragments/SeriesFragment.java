@@ -40,26 +40,22 @@ public class SeriesFragment extends Fragment {
         topList = view.findViewById(R.id.movies_fr_rv_top);
         upcomingSlider = view.findViewById(R.id.movies_fr_vp_releases);
 
-        ((TextView)view.findViewById(R.id.movies_fr_tv_favorites_desc)).setText(getString(R.string.fr_series_favorites_desc));
-        ((TextView)view.findViewById(R.id.movies_fr_tv_new)).setText(getString(R.string.fr_series_airing_now));
-        ((TextView)view.findViewById(R.id.movies_fr_tv_theaters_desc)).setText(getString(R.string.fr_series_theaters_desc));
-        ((TextView)view.findViewById(R.id.movies_fr_tv_top)).setText(getString(R.string.fr_series_top_all_string));
+        ((TextView) view.findViewById(R.id.movies_fr_tv_favorites_desc)).setText(getString(R.string.fr_series_favorites_desc));
+        ((TextView) view.findViewById(R.id.movies_fr_tv_new)).setText(getString(R.string.fr_series_airing_now));
+        ((TextView) view.findViewById(R.id.movies_fr_tv_theaters_desc)).setText(getString(R.string.fr_series_theaters_desc));
+        ((TextView) view.findViewById(R.id.movies_fr_tv_top)).setText(getString(R.string.fr_series_top_all_string));
 
-        if(this.getContext() != null) {
-            JSONTask favoritesTask = new JSONTask(this.getContext(), favoritesList,
-                    Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
+        if (this.getContext() != null) {
+            JSONTask favoritesTask = new JSONTask(favoritesList, Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
             favoritesTask.execute("https://api.themoviedb.org/3/tv/popular");
 
-            JSONTask latestTask = new JSONTask(this.getContext(), newList,
-                    Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
+            JSONTask latestTask = new JSONTask(newList, Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
             latestTask.execute("https://api.themoviedb.org/3/tv/on_the_air");
 
-            JSONTask topTask = new JSONTask(this.getContext(), topList,
-                    Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
+            JSONTask topTask = new JSONTask(topList, Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
             topTask.execute("https://api.themoviedb.org/3/tv/top_rated");
 
-            JSONTask upcomingTask = new JSONTask(this.getContext(), upcomingSlider,
-                    Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
+            JSONTask upcomingTask = new JSONTask(upcomingSlider, Globals.DATA_TYPE.SERIES, Globals.ACTIVITY_TYPE.MAIN);
             upcomingTask.execute("https://api.themoviedb.org/3/tv/airing_today");
         }
         upcomingSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -67,8 +63,7 @@ public class SeriesFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 SliderAdapter adapter = (SliderAdapter) upcomingSlider.getAdapter();
-                if (adapter == null)
-                    return;
+                if (adapter == null) return;
                 upcomingSlider.removeCallbacks(sliderIncrease);
                 upcomingSlider.removeCallbacks(sliderLoop);
                 if (position == adapter.getItemCount() - 1)
@@ -79,8 +74,7 @@ public class SeriesFragment extends Fragment {
         return view;
     }
 
-    private final Runnable sliderIncrease = () ->
-            upcomingSlider.setCurrentItem(upcomingSlider.getCurrentItem() + 1, true);
+    private final Runnable sliderIncrease = () -> upcomingSlider.setCurrentItem(upcomingSlider.getCurrentItem() + 1, true);
 
     private final Runnable sliderLoop = () -> upcomingSlider.setCurrentItem(0, false);
 }

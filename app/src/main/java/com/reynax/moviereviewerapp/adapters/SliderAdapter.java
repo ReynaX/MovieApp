@@ -13,18 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
+import com.reynax.moviereviewerapp.data.OnItemClickListener;
 
 import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder> {
-
     private final List<Content> items;
+    private final OnItemClickListener listener;
 
-    private final Context context;
-
-    public SliderAdapter(@NonNull Context context, @NonNull List<Content> items) {
+    public SliderAdapter(@NonNull List<Content> items, @NonNull OnItemClickListener listener) {
         this.items = items;
-        this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,17 +34,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Content content = items.get(position);
-        holder.title.setText(content.getTitle());
-
-        if(content.getPosterPath() != null) {
-            String posterPath = "https://image.tmdb.org/t/p/w500" + content.getPosterPath();
-            Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
-        }else holder.poster.setImageResource(R.drawable.placeholder);
-        if(content.getBackdropPath() != null) {
-            String backdropPath = "https://image.tmdb.org/t/p/w500" + content.getBackdropPath();
-            Glide.with(context).load(backdropPath).placeholder(R.drawable.placeholder).into(holder.backdrop);
-        }else holder.backdrop.setImageResource(R.drawable.placeholder);
+        holder.bind(items.get(position), listener);
     }
 
     @Override
@@ -66,6 +55,21 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.ViewHolder
             backdrop = itemView.findViewById(R.id.item_slider_iv_backdrop);
             poster = itemView.findViewById(R.id.item_slider_iv_poster);
             title = itemView.findViewById(R.id.item_slider_tv_title);
+        }
+
+        public void bind(Content item, OnItemClickListener listener){
+            this.title.setText(item.getTitle());
+
+            if(item.getPosterPath() != null) {
+                String posterPath = "https://image.tmdb.org/t/p/w500" + item.getPosterPath();
+                Glide.with(itemView).load(posterPath).placeholder(R.drawable.placeholder).into(this.poster);
+            }else this.poster.setImageResource(R.drawable.placeholder);
+            if(item.getBackdropPath() != null) {
+                String backdropPath = "https://image.tmdb.org/t/p/w500" + item.getBackdropPath();
+                Glide.with(itemView).load(backdropPath).placeholder(R.drawable.placeholder).into(this.backdrop);
+            }else this.backdrop.setImageResource(R.drawable.placeholder);
+
+            itemView.setOnClickListener(view -> listener.onItemClick(item));
         }
     }
 }

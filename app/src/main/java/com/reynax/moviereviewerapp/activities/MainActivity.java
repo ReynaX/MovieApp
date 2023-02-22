@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         if (mediaCategory != null) {
             mediaCategory.addTab(mediaCategory.newTab().setText("Movies"));
             mediaCategory.addTab(mediaCategory.newTab().setText("Streaming & TV"));
-            mediaCategory.addTab(mediaCategory.newTab().setText("Celebrities"));
         }
     }
 

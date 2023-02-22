@@ -13,10 +13,10 @@ public class MovieDetails implements Details{
     private String releaseDate;
 
     @SerializedName("revenue")
-    private long revenue;
+    private Long revenue;
 
     @SerializedName("runtime")
-    private long runtime;
+    private Long runtime;
 
     @SerializedName("status")
     private String status;
@@ -25,7 +25,7 @@ public class MovieDetails implements Details{
     private String tagline;
 
     public MovieDetails(int budget, String homepage, String releaseDate,
-                        long revenue, long runtime, String status, String tagline) {
+                        Long revenue, Long runtime, String status, String tagline) {
         this.budget = budget;
         this.homepage = homepage;
         this.releaseDate = releaseDate;
@@ -48,11 +48,11 @@ public class MovieDetails implements Details{
         return releaseDate;
     }
 
-    public long getRevenue() {
+    public Long getRevenue() {
         return revenue;
     }
 
-    public long getRuntime() {
+    public Long getRuntime() {
         return runtime;
     }
 

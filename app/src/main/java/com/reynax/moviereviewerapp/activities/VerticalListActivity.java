@@ -49,8 +49,7 @@ public class VerticalListActivity extends AppCompatActivity {
         this.dataType = (Globals.DATA_TYPE) extras.get("dataType");
 
         if (this.getApplicationContext() != null) {
-            JSONTask task = new JSONTask(this.getApplicationContext(), list,
-                    dataType, Globals.ACTIVITY_TYPE.VERTICAL_LIST);
+            JSONTask task = new JSONTask(list, dataType, Globals.ACTIVITY_TYPE.VERTICAL_LIST);
             task.execute("https://api.themoviedb.org/3/" + query);
         }
 
@@ -67,6 +66,12 @@ public class VerticalListActivity extends AppCompatActivity {
             }
         });
 
+        searchView.setOnSearchClickListener(view -> {
+            VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
+            if(adapter != null){
+                items = adapter.getItems();
+            }
+        });
         hideNavigationBar();
     }
 
@@ -81,6 +86,8 @@ public class VerticalListActivity extends AppCompatActivity {
         VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
         if(adapter != null){
             adapter.loadMore(q, getApplicationContext(), loadMoreButton);
+            if(!searchView.isIconified())
+                searchView.setIconified(true);
         }
     }
 
@@ -92,10 +99,8 @@ public class VerticalListActivity extends AppCompatActivity {
 
     private void filter(String text){
         VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
-        if(adapter != null) {
+        if(adapter != null && items != null) {
             ArrayList<Content> filteredList = new ArrayList<>();
-            if(items == null)
-                items = adapter.getItems();
 
             for (Content item : items) {
                 if (item.getTitle().toLowerCase(Locale.ROOT).contains(text.toLowerCase())) {

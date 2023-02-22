@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -26,6 +27,7 @@ import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.data.Content;
 import com.reynax.moviereviewerapp.data.Movie;
 import com.reynax.moviereviewerapp.data.MovieDetails;
+import com.reynax.moviereviewerapp.data.OnItemClickListener;
 import com.reynax.moviereviewerapp.data.Series;
 import com.reynax.moviereviewerapp.data.SeriesDetails;
 
@@ -46,14 +48,16 @@ import java.util.List;
 import java.util.Locale;
 
 public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalContentBoxAdapter.ViewHolder> {
-    private List<Content> items;
-    private final Context context;
 
+    private List<Content> items;
     private int pagesLoaded;
 
-    public VerticalContentBoxAdapter(@NonNull Context context, @NonNull List<Content> items) {
-        this.context = context;
+    private final OnItemClickListener listener;
+
+    public VerticalContentBoxAdapter(@NonNull List<Content> items, @NonNull OnItemClickListener listener) {
         this.items = items;
+        this.listener = listener;
+
         this.pagesLoaded = 1;
     }
 
@@ -65,30 +69,7 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Content item = items.get(position);
-        holder.rating.setText(String.format(Locale.ENGLISH, "%.1f", Double.parseDouble(item.getRating())));
-        holder.title.setText(item.getTitle());
-
-        if (item.getPosterPath() != null) {
-            String posterPath = "https://image.tmdb.org/t/p/w500" + item.getPosterPath();
-            Glide.with(context).load(posterPath).placeholder(R.drawable.placeholder).into(holder.poster);
-        } else holder.poster.setImageResource(R.drawable.placeholder);
-
-        if(item instanceof Movie){
-            String releaseDate = ((Movie) item).getReleaseData();
-            long length = ((MovieDetails)item.getDetails()).getRuntime();
-
-            LocalDate date = LocalDate.parse(releaseDate);
-            holder.year.setText(String.format(Locale.ENGLISH, "%d", date.getYear()));
-            holder.length.setText(String.format(Locale.ENGLISH, "%d min", length));
-        }else if(item instanceof Series){
-            Series series = (Series) item;
-            long seasons = ((SeriesDetails)series.getDetails()).getNumberOfSeasons();
-            long episodes = ((SeriesDetails)series.getDetails()).getNumberOfEpisodes();
-
-            holder.year.setText(String.format(Locale.ENGLISH, "%d seasons", seasons));
-            holder.length.setText(String.format(Locale.ENGLISH, "%d episodes", episodes));
-        }
+        holder.bind(items.get(position), listener);
     }
 
     @Override
@@ -121,6 +102,34 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
             title = itemView.findViewById(R.id.v_content_box_tv_title);
             year = itemView.findViewById(R.id.v_content_box_tv_year);
             length = itemView.findViewById(R.id.v_content_box_tv_length);
+        }
+
+        public void bind(Content item, OnItemClickListener listener){
+            this.rating.setText(String.format(Locale.ENGLISH, "%.1f", Double.parseDouble(item.getRating())));
+            this.title.setText(item.getTitle());
+
+            if (item.getPosterPath() != null) {
+                String posterPath = "https://image.tmdb.org/t/p/w500" + item.getPosterPath();
+                Glide.with(itemView.getContext()).load(posterPath).placeholder(R.drawable.placeholder).into(this.poster);
+            } else this.poster.setImageResource(R.drawable.placeholder);
+
+            if(item instanceof Movie){
+                String releaseDate = ((Movie) item).getReleaseData();
+                long length = ((MovieDetails)item.getDetails()).getRuntime();
+
+                LocalDate date = LocalDate.parse(releaseDate);
+                this.year.setText(String.format(Locale.ENGLISH, "%d", date.getYear()));
+                this.length.setText(String.format(Locale.ENGLISH, "%d min", length));
+            }else if(item instanceof Series){
+                Series series = (Series) item;
+                long seasons = ((SeriesDetails)series.getDetails()).getNumberOfSeasons();
+                long episodes = ((SeriesDetails)series.getDetails()).getNumberOfEpisodes();
+
+                this.year.setText(String.format(Locale.ENGLISH, "%d seasons", seasons));
+                this.length.setText(String.format(Locale.ENGLISH, "%d episodes", episodes));
+            }
+
+            itemView.setOnClickListener(view -> listener.onItemClick(item));
         }
     }
 
