@@ -23,6 +23,7 @@ public class ContentDetailsListener implements OnItemClickListener{
         String description = generateDescription(item);
 
         Intent intent = new Intent(context, ContentDetailsActivity.class);
+        intent.putExtra("id", item.getId());
         intent.putExtra("title", item.getTitle());
         intent.putExtra("description", description);
         intent.putExtra("backdrop", item.getBackdropPath());
@@ -30,7 +31,12 @@ public class ContentDetailsListener implements OnItemClickListener{
         intent.putExtra("genres", item.getGenreIds());
         intent.putExtra("overview", item.getOverview());
         intent.putExtra("rating", item.getRating());
+        intent.putExtra("popularity", item.getPopularity());
         intent.putExtra("description", description);
+        if(item instanceof Movie)
+            intent.putExtra("type", "movie");
+        else if(item instanceof Series)
+            intent.putExtra("type", "tv");
         context.startActivity(intent);
     }
 

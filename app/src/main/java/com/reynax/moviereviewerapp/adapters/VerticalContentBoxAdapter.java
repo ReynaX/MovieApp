@@ -113,14 +113,14 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
                 Glide.with(itemView.getContext()).load(posterPath).placeholder(R.drawable.placeholder).into(this.poster);
             } else this.poster.setImageResource(R.drawable.placeholder);
 
-            if(item instanceof Movie){
+            if(item instanceof Movie && item.getDetails() != null){
                 String releaseDate = ((Movie) item).getReleaseData();
                 long length = ((MovieDetails)item.getDetails()).getRuntime();
 
                 LocalDate date = LocalDate.parse(releaseDate);
                 this.year.setText(String.format(Locale.ENGLISH, "%d", date.getYear()));
                 this.length.setText(String.format(Locale.ENGLISH, "%d min", length));
-            }else if(item instanceof Series){
+            }else if(item instanceof Series && item.getDetails() != null){
                 Series series = (Series) item;
                 long seasons = ((SeriesDetails)series.getDetails()).getNumberOfSeasons();
                 long episodes = ((SeriesDetails)series.getDetails()).getNumberOfEpisodes();

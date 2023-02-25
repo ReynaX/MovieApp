@@ -1,121 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#191919"
-    tools:context=".activities.ContentDetailsActivity">
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#191919"
+        tools:context=".activities.ContentDetailsActivity">
 
-        <ImageButton
-            android:id="@+id/content_details_btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="#393939"
-            android:minWidth="50dp"
-            android:minHeight="50dp"
-            android:onClick="onBackButtonPressed"
-            app:srcCompat="?attr/homeAsUpIndicator"
-            app:tint="@color/white" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/content_details_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#393939"
+                android:minWidth="50dp"
+                android:minHeight="50dp"
+                android:onClick="onBackButtonPressed"
+                app:srcCompat="?attr/homeAsUpIndicator"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/content_details_tv_title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#393939"
+                android:gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/content_details_tv_title_bar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#393939"
-            android:gravity="center_vertical"
+            android:id="@+id/content_details_tv_title_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="24sp" />
-    </LinearLayout>
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <TextView
-        android:id="@+id/content_details_tv_title_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        <TextView
+            android:id="@+id/content_details_tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#696969"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_title_main" />
 
-    <TextView
-        android:id="@+id/content_details_tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#696969"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_tv_title_main" />
+        <ImageView
+            android:id="@+id/content_details_iv_backdrop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_description"
+            tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/content_details_iv_backdrop"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_tv_description"
-        tools:src="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/content_details_tv_poster"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_iv_backdrop" />
 
-    <ImageView
-        android:id="@+id/content_details_tv_poster"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_iv_backdrop" />
+        <LinearLayout
+            android:id="@+id/content_details_ll_genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/content_details_tv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_iv_backdrop" />
 
-    <LinearLayout
-        android:id="@+id/content_details_ll_genres"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/content_details_tv_poster"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_iv_backdrop"></LinearLayout>
+        <TextView
+            android:id="@+id/content_details_tv_overview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/content_details_tv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_ll_genres" />
 
-    <TextView
-        android:id="@+id/content_details_tv_overview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/content_details_tv_poster"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_ll_genres" />
+        <ImageView
+            android:id="@+id/content_details_iv_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/star_filled"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_poster" />
 
-    <ImageView
-        android:id="@+id/content_details_iv_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/star_filled"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_tv_poster" />
+        <TextView
+            android:id="@+id/content_details_tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/content_details_iv_star"
+            app:layout_constraintStart_toEndOf="@+id/content_details_iv_star"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_poster" />
 
-    <TextView
-        android:id="@+id/content_details_tv_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/content_details_tv_overview"
-        app:layout_constraintStart_toEndOf="@+id/content_details_iv_star"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_tv_poster" />
+        <TextView
+            android:id="@+id/content_details_tv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#696969"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/content_details_iv_star"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_rating" />
 
-    <TextView
-        android:id="@+id/content_details_tv_popularity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#696969"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/content_details_iv_star"
-        app:layout_constraintTop_toBottomOf="@+id/content_details_tv_rating" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/content_details_tv_similar"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/content_details_similar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_popularity" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/content_details_rv_similar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content_details_tv_similar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

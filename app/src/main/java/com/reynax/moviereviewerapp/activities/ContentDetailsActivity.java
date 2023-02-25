@@ -1,7 +1,10 @@
 package com.reynax.moviereviewerapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,14 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.reynax.moviereviewerapp.Globals;
+import com.reynax.moviereviewerapp.JSONTask;
 import com.reynax.moviereviewerapp.R;
-import com.reynax.moviereviewerapp.data.Content;
-import com.reynax.moviereviewerapp.data.Movie;
-import com.reynax.moviereviewerapp.data.MovieDetails;
-import com.reynax.moviereviewerapp.data.Series;
-import com.reynax.moviereviewerapp.data.SeriesDetails;
 
-import java.time.LocalDate;
 import java.util.Locale;
 
 public class ContentDetailsActivity extends AppCompatActivity {
@@ -31,6 +29,7 @@ public class ContentDetailsActivity extends AppCompatActivity {
     private TextView overview;
     private TextView rating;
     private TextView popularity;
+    private RecyclerView similar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,9 @@ public class ContentDetailsActivity extends AppCompatActivity {
         overview = findViewById(R.id.content_details_tv_overview);
         rating = findViewById(R.id.content_details_tv_rating);
         popularity = findViewById(R.id.content_details_tv_popularity);
-
+        similar = findViewById(R.id.content_details_rv_similar);
 
         Bundle extras = getIntent().getExtras();
-//        Content content = (Content) extras.get("item");
         titleBar.setText((String)extras.get("title"));
         titleMain.setText((String)extras.get("title"));
 
@@ -63,17 +61,35 @@ public class ContentDetailsActivity extends AppCompatActivity {
         else Glide.with(this).load(R.drawable.placeholder).into(poster);
 
         overview.setText((String)extras.get("overview"));
-        rating.setText(String.format(Locale.ENGLISH, "%s/10", (String) extras.get("rating")));
-//        popularity.setText(((Double) extras.get("popularity")).intValue());
+        rating.setText(String.format(Locale.ENGLISH, "%.1f/10", Double.valueOf((String) extras.get("rating"))));
+        double popularityValue = (Double)extras.get("popularity");
+        popularity.setText(String.valueOf(popularityValue));
 
         description.setText((String)extras.get("description"));
         int[] genresIds = (int[]) extras.get("genres");
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(5, 0, 5, 0);
+
         for(int i = 0; i < Math.min(genresIds.length, 3); ++i){
             TextView genre = new TextView(this);
+            genre.setLayoutParams(params);
+            genre.setTextColor(Color.WHITE);
+            genre.setTextSize(13);
+            genre.setPadding(5, 0, 5, 0);
+
+            Drawable background = getResources().getDrawable(R.drawable.genre_border);
+            genre.setBackground(background);
             genre.setText(Globals.getGenreName(genresIds[i]));
             genresLayout.addView(genre);
         }
+
+        String type = (String)extras.get("type");
+        new JSONTask(similar, type.equals("movie") ? Globals.DATA_TYPE.MOVIES : Globals.DATA_TYPE.SERIES,
+                Globals.ACTIVITY_TYPE.MAIN).execute(String.format(Locale.ENGLISH,
+                "https://api.themoviedb.org/3/%s/%d/similar", type, (long) extras.get("id")));
     }
 
     public void onBackButtonPressed(View view) {

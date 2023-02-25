@@ -8,13 +8,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
+    android:background="#212121"
     android:paddingBottom="?attr/actionBarSize">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movies_fr_cl_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#212121"
         tools:context=".fragments.HomeFragment">
 
         <Button
