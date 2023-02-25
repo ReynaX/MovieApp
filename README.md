@@ -1,5 +1,5 @@
 # MovieApp
-Simple mobile novie app that allows to discover movies and TV shows.
+Simple mobile movie app that allows to discover movies and TV shows.
 
 ### Installation
 For application to work, API key is needed from [TMDB](www.themoviedb.org). Given key has to be included in Private.java class. 
