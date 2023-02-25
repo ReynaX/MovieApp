@@ -86,8 +86,11 @@ public class VerticalListActivity extends AppCompatActivity {
         VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
         if(adapter != null){
             adapter.loadMore(q, getApplicationContext(), loadMoreButton);
-            if(!searchView.isIconified())
+            if(!searchView.isIconified()) {
+                searchView.setQuery("", false);
+                searchView.clearFocus();
                 searchView.setIconified(true);
+            }
         }
     }
 
