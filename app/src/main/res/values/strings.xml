@@ -22,4 +22,6 @@
     <string name="v_list_load_more">Load more</string>
     <string name="v_list_load_more_loading">Loading…</string>
     <string name="content_details_similar">You might like</string>
+
+    <string name="credentials">All data and images are collected from TMDB. </string>
 </resources>

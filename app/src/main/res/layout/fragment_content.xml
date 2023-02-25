@@ -17,6 +17,27 @@
         android:layout_height="wrap_content"
         tools:context=".fragments.HomeFragment">
 
+        <TextView
+            android:id="@+id/movies_tv_credentials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/credentials"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_iv_credentials" />
+
+        <ImageView
+            android:id="@+id/movies_iv_credentials"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_rv_top"
+            app:srcCompat="@drawable/credentials" />
+
         <Button
             android:id="@+id/movies_fr_btn_see_theaters"
             style="@style/SeeAllButton"
@@ -140,7 +161,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_top" />
+            app:layout_constraintTop_toBottomOf="@+id/movies_fr_tv_top"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
