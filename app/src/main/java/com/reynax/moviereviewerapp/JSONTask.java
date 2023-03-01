@@ -95,7 +95,9 @@ public class JSONTask extends AsyncTask<String, Void, List<Content>> {
                         return movies;
                 }
                 movies = gson.fromJson(gson.fromJson(jsonText, JsonObject.class).get("results"), listType);
-                Globals.loadDetails(movies, dataType);
+                if(activityType == Globals.ACTIVITY_TYPE.VERTICAL_LIST)
+                    Globals.loadDetails(movies, dataType);
+
             }
         } catch (IOException ex) {
             ex.printStackTrace();

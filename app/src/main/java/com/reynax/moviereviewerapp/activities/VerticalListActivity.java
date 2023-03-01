@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -14,13 +17,11 @@ import com.reynax.moviereviewerapp.JSONTask;
 import com.reynax.moviereviewerapp.R;
 import com.reynax.moviereviewerapp.adapters.VerticalContentBoxAdapter;
 import com.reynax.moviereviewerapp.data.Content;
-import com.reynax.moviereviewerapp.data.Details;
-import com.reynax.moviereviewerapp.data.MovieDetails;
-import com.reynax.moviereviewerapp.data.SeriesDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
 public class VerticalListActivity extends AppCompatActivity {
 
@@ -28,11 +29,13 @@ public class VerticalListActivity extends AppCompatActivity {
     private TextView title;
     private SearchView searchView;
     private Button loadMoreButton;
+    private ImageButton sortButton;
 
     private Globals.DATA_TYPE dataType;
     private String query;
 
     private List<Content> items = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,7 @@ public class VerticalListActivity extends AppCompatActivity {
         title = findViewById(R.id.v_list_tv_title);
         searchView = findViewById(R.id.v_list_sv_search);
         loadMoreButton = findViewById(R.id.v_list_btn_load_more);
+        sortButton = findViewById(R.id.v_list_btn_sort);
 
         title.setText(extras.getString("title"));
         this.query = (String) extras.get("query");
@@ -72,6 +76,21 @@ public class VerticalListActivity extends AppCompatActivity {
                 items = adapter.getItems();
             }
         });
+
+
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(VerticalListActivity.this, sortButton);
+                menu.inflate(R.menu.menu_sort_options);
+
+                menu.setOnMenuItemClickListener(menuItem -> {
+                    onMenuItemSelected(menuItem);
+                    return true;
+                });
+                menu.show();
+            }
+        });
         hideNavigationBar();
     }
 
@@ -85,12 +104,13 @@ public class VerticalListActivity extends AppCompatActivity {
 
         VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter) list.getAdapter();
         if(adapter != null){
-            adapter.loadMore(q, getApplicationContext(), loadMoreButton);
             if(!searchView.isIconified()) {
                 searchView.setQuery("", false);
                 searchView.clearFocus();
                 searchView.setIconified(true);
             }
+            adapter.loadMore(q, getApplicationContext(), loadMoreButton);
+
         }
     }
 
@@ -112,6 +132,13 @@ public class VerticalListActivity extends AppCompatActivity {
             }
 
             adapter.filter(filteredList);
+        }
+    }
+
+    void onMenuItemSelected(MenuItem item){
+        VerticalContentBoxAdapter adapter = (VerticalContentBoxAdapter)list.getAdapter();
+        if(adapter != null){
+            adapter.sort(item.getItemId());
         }
     }
 }

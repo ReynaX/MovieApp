@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Globals {
-    public enum DATA_TYPE {MOVIES, SERIES, CELEBRITIES}
+    public enum DATA_TYPE {MOVIES, SERIES}
 
     public enum ACTIVITY_TYPE {MAIN, VERTICAL_LIST}
 

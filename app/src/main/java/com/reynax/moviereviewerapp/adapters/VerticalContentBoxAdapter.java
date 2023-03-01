@@ -2,18 +2,14 @@ package com.reynax.moviereviewerapp.adapters;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,29 +17,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.reynax.moviereviewerapp.Globals;
-import com.reynax.moviereviewerapp.JSONTask;
 import com.reynax.moviereviewerapp.Private;
 import com.reynax.moviereviewerapp.R;
-import com.reynax.moviereviewerapp.data.Content;
-import com.reynax.moviereviewerapp.data.Movie;
-import com.reynax.moviereviewerapp.data.MovieDetails;
-import com.reynax.moviereviewerapp.data.OnItemClickListener;
-import com.reynax.moviereviewerapp.data.Series;
-import com.reynax.moviereviewerapp.data.SeriesDetails;
+import com.reynax.moviereviewerapp.data.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +41,6 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
 
     private List<Content> items;
     private int pagesLoaded;
-
     private final OnItemClickListener listener;
 
     public VerticalContentBoxAdapter(@NonNull List<Content> items, @NonNull OnItemClickListener listener) {
@@ -78,12 +67,36 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
     }
 
 
-    public void filter(List<Content> items){
+    public void filter(List<Content> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
-    public List<Content> getItems(){
+    public void sort(int id) {
+        if (id == R.id.sort_by_name_descending) {
+            this.items.sort(Comparator.comparing(Content::getTitle));
+            Collections.reverse(this.items);
+        } else if (id == R.id.sort_by_popularity_descending) {
+            this.items.sort(Comparator.comparing(Content::getPopularity));
+            Collections.reverse(this.items);
+        } else if (id == R.id.sort_by_rating_descending) {
+            this.items.sort(Comparator.comparing(Content::getRating));
+            Collections.reverse(this.items);
+        } else if (id == R.id.sort_by_name_ascending)
+            this.items.sort(Comparator.comparing(Content::getTitle));
+        else if (id == R.id.sort_by_popularity_ascending)
+            this.items.sort(Comparator.comparing(Content::getPopularity));
+        else if (id == R.id.sort_by_rating_ascending)
+            this.items.sort(Comparator.comparing(Content::getRating));
+        notifyDataSetChanged();
+    }
+
+    public void randomize() {
+        Collections.shuffle(this.items);
+        notifyDataSetChanged();
+    }
+
+    public List<Content> getItems() {
         return items;
     }
 
@@ -104,7 +117,7 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
             length = itemView.findViewById(R.id.v_content_box_tv_length);
         }
 
-        public void bind(Content item, OnItemClickListener listener){
+        public void bind(Content item, OnItemClickListener listener) {
             this.rating.setText(String.format(Locale.ENGLISH, "%.1f", Double.parseDouble(item.getRating())));
             this.title.setText(item.getTitle());
 
@@ -113,17 +126,17 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
                 Glide.with(itemView.getContext()).load(posterPath).placeholder(R.drawable.placeholder).into(this.poster);
             } else this.poster.setImageResource(R.drawable.placeholder);
 
-            if(item instanceof Movie && item.getDetails() != null){
+            if (item instanceof Movie && item.getDetails() != null) {
                 String releaseDate = ((Movie) item).getReleaseData();
-                long length = ((MovieDetails)item.getDetails()).getRuntime();
+                long length = ((MovieDetails) item.getDetails()).getRuntime();
 
                 LocalDate date = LocalDate.parse(releaseDate);
                 this.year.setText(String.format(Locale.ENGLISH, "%d", date.getYear()));
                 this.length.setText(String.format(Locale.ENGLISH, "%d min", length));
-            }else if(item instanceof Series && item.getDetails() != null){
+            } else if (item instanceof Series && item.getDetails() != null) {
                 Series series = (Series) item;
-                long seasons = ((SeriesDetails)series.getDetails()).getNumberOfSeasons();
-                long episodes = ((SeriesDetails)series.getDetails()).getNumberOfEpisodes();
+                long seasons = ((SeriesDetails) series.getDetails()).getNumberOfSeasons();
+                long episodes = ((SeriesDetails) series.getDetails()).getNumberOfEpisodes();
 
                 this.year.setText(String.format(Locale.ENGLISH, "%d seasons", seasons));
                 this.length.setText(String.format(Locale.ENGLISH, "%d episodes", episodes));
@@ -133,14 +146,15 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
         }
     }
 
-    public void loadMore(String q, Context context, Button loadMoreButton){
+    public void loadMore(String q, Context context, Button loadMoreButton) {
         new LoadMoreTask(context, loadMoreButton).execute(q);
     }
 
-    public class LoadMoreTask extends AsyncTask<String, Void, List<Content>>{
+    public class LoadMoreTask extends AsyncTask<String, Void, List<Content>> {
         private final Context context;
         private final Button loadMoreButton;
-        public LoadMoreTask(@NonNull Context context, @NonNull Button loadMoreButton){
+
+        public LoadMoreTask(@NonNull Context context, @NonNull Button loadMoreButton) {
             this.context = context;
             this.loadMoreButton = loadMoreButton;
         }
@@ -156,12 +170,12 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
         protected List<Content> doInBackground(String... strings) {
             List<Content> movies = new ArrayList<>();
             Globals.DATA_TYPE dataType;
-            if(items == null || items.size() == 0)
+            if (items == null || items.size() == 0)
                 return movies;
 
-            if(items.get(0) instanceof Movie)
+            if (items.get(0) instanceof Movie)
                 dataType = Globals.DATA_TYPE.MOVIES;
-            else if(items.get(0) instanceof Series)
+            else if (items.get(0) instanceof Series)
                 dataType = Globals.DATA_TYPE.SERIES;
             else return movies;
 
@@ -201,7 +215,7 @@ public class VerticalContentBoxAdapter extends RecyclerView.Adapter<VerticalCont
         @Override
         protected void onPostExecute(List<Content> contents) {
             super.onPostExecute(contents);
-            if(contents != null && contents.size() > 0) {
+            if (contents != null && contents.size() > 0) {
                 items.addAll(contents);
                 notifyDataSetChanged();
                 ++pagesLoaded;
